@@ -1,11 +1,12 @@
 module OfxParser
   module MonetarySupport
 
-    @@monies ||= []
-
     class_extension do
       def monetary_vars(*methods) #:nodoc:
-        @@monies += methods
+        @monies = methods
+      end
+      def monies
+        @monies || []
       end
     end
 
@@ -25,7 +26,7 @@ module OfxParser
 
     def monetary_method_call?(meth) #:nodoc:
       orig = original_method(meth)
-      @@monies.include?(orig) && meth.to_s == "#{orig}_in_pennies"
+      self.class.monies.include?(orig) && meth.to_s == "#{orig}_in_pennies"
     end
 
     def method_missing(meth, *args) #:nodoc:

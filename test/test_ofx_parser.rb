@@ -14,7 +14,7 @@ class OfxParserTest < Test::Unit::TestCase
     ofx = File.read(fixtures_dir + "/#{fn}")
     ofx.gsub!(/\r?\n/,"\r\n") # change line endings to \r\n
 
-    OFX_FILES[fn.scan(/^[^.]*/).to_s.to_sym] = ofx
+    OFX_FILES[fn.scan(/^[^.]*/).join.to_sym] = ofx
   end
 
   def setup
